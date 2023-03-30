@@ -1,4 +1,4 @@
-# JSON:API Error
+# JSON:API Error [![Test](https://github.com/wunderwerkio/jsonapi-error/actions/workflows/main.yml/badge.svg)](https://github.com/wunderwerkio/jsonapi-error/actions/workflows/main.yml)
 
 This package provides `JsonApiError` and `JsonApiErrorResponse` classses to conveniently handle errors following the [JSON:API specification](https://jsonapi.org/format/#errors).
 
