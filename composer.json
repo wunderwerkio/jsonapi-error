@@ -1,0 +1,30 @@
+{
+  "name": "wunderwerkio/jsonapi-error",
+  "description": "Simple class to conveniently create a JSON error that complies with the JSON:API specification.",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Wunderwerk\\JsonApiError\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Christian Foidl",
+      "email": "christian@wunderwerk.io",
+      "homepage": "https://wunderwerk.io",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require-dev": {
+    "phpunit/phpunit": "^10.0"
+  },
+  "scripts": {
+    "test": "phpunit --testdox tests",
+    "test-coverage": "XDEBUG_MODE=coverage phpunit --coverage-text --coverage-filter src --testdox tests"
+  },
+  "require": {
+    "symfony/http-foundation": "^4"
+  }
+}
