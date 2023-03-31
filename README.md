@@ -4,6 +4,15 @@ This package provides `JsonApiError` and `JsonApiErrorResponse` classses to conv
 
 The `JsonApiErrorResponse` extends the `JsonResponse` from `symfony/http-foundation`, so this package is meant to be used in projects using that.
 
+**Table of contents:**
+- [Install](#install)
+- [Usage](#usage)
+    - [Return a simple error response](#return-a-simple-error-response)
+    - [Return multiple errors](#return-multiple-errors)
+    - [Build response from `JsonApiError` objects](#build-response-from-jsonapierror-objects)
+- [Local Development](#local-development)
+- [Credits](#credits)
+
 ## Install
 
 Install this package via composer:
@@ -155,3 +164,29 @@ function someRequestHandler(Request $request): Response {
   ]);
 }
 ```
+
+## Local Development
+
+A local dev environment without the need to have PHP locally installed can be done via [DDEV](https://ddev.readthedocs.io).
+
+```bash
+ddev start
+```
+
+**Run tests**
+
+```bash
+ddev composer test
+```
+
+**Lint with PHPStan**
+
+```bash
+ddev composer analyze
+```
+
+## Credits
+
+This project took inspiration from the following awesome projects:
+
+- [`SineMah/json-api-error`](https://github.com/SineMah/json-api-error)
