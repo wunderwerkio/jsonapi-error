@@ -1,4 +1,4 @@
-name: Test
+name: Lint & Test
 
 on:
   - push
@@ -35,16 +35,33 @@ jobs:
           command: require
           args: symfony/http-foundation:${{ matrix.symfony-version }}
 
-      - name: Lint
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.1"
-          command: run-script
-          args: analyze
-
       - name: Test
         uses: php-actions/composer@v6
         with:
           php_version: "8.1"
           command: run-script
           args: test
+
+  lint:
+    name: Lint with PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.1"
+
+      - name: Lint
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.1"
+          command: run-script
+          args: analyze
