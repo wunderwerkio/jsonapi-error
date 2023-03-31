@@ -14,7 +14,7 @@ class JsonApiError {
   /**
    * List of valid error fields.
    *
-   * @var array
+   * @var string[]
    *
    * @see https://jsonapi.org/format/#error-objects
    */
@@ -28,13 +28,13 @@ class JsonApiError {
    *   The HTTP status code applicable to this problem.
    * @param string|null $id
    *   A unique identifier for this particular occurrence of the problem.
-   * @param array|null $links
+   * @param string[]|null $links
    *   A links object containing the following members:
    *   - about: a link that leads to further details about this particular
    *     occurrence of the problem.
    * @param string|null $code
    *   An application-specific error code, expressed as a string value.
-   * @param array|null $source
+   * @param array{'pointer'?: string, 'parameter'?: string}|null $source
    *   An object containing references to the source of the error, optionally
    *   including any of the following members:
    *   - pointer: a JSON Pointer [RFC6901] to the associated entity in the
@@ -48,7 +48,7 @@ class JsonApiError {
    * @param string|null $detail
    *   A human-readable explanation specific to this occurrence of the problem.
    *   Like title, this field’s value can be localized.
-   * @param array|null $meta
+   * @param mixed[]|null $meta
    *   A meta object containing non-standard meta-information about the error.
    */
   protected function __construct(
@@ -87,7 +87,7 @@ class JsonApiError {
    * - about: a link that leads to further details about this particular
    *   occurrence of the problem.
    *
-   * @return array|null
+   * @return string[]|null
    *   The links object.
    */
   public function getLinks(): ?array {
@@ -107,7 +107,7 @@ class JsonApiError {
   /**
    * Get an object containing references to the source of the error.
    *
-   * @return array|null
+   * @return array{'pointer'?: string, 'parameter'?: string}|null
    *   The source object.
    */
   public function getSource(): ?array {
@@ -137,7 +137,7 @@ class JsonApiError {
   /**
    * Get a meta object containing non-standard meta-information about the error.
    *
-   * @return array|null
+   * @return mixed[]|null
    *   The meta object.
    */
   public function getMeta(): ?array {
@@ -147,7 +147,7 @@ class JsonApiError {
   /**
    * Convert the JsonApiError object to an array.
    *
-   * @return array
+   * @return mixed[]
    *   The error array.
    */
   public function toArray(): array {
@@ -169,7 +169,7 @@ class JsonApiError {
   /**
    * Create a JsonApiError object from an array.
    *
-   * @param array $error
+   * @param mixed[] $error
    *   The error array.
    *
    * @return JsonApiError

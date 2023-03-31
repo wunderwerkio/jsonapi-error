@@ -16,7 +16,7 @@ class JsonApiErrorResponse extends JsonResponse {
    *
    * @param \Wunderwerk\JsonApiError\JsonApiError[] $errors
    *   The errors to be returned.
-   * @param array $headers
+   * @param array<string, mixed> $headers
    *   An array of HTTP headers.
    * @param bool $json
    *   Whether the response body should be JSON encoded.
@@ -37,7 +37,7 @@ class JsonApiErrorResponse extends JsonResponse {
   /**
    * Get the error response data.
    *
-   * @return array
+   * @return array{'errors': array<string, mixed>}
    *   The response data.
    */
   protected function createResponseArray(): array {
@@ -54,10 +54,12 @@ class JsonApiErrorResponse extends JsonResponse {
    * Otherwise if all errors have a 5xx status code, 500 is returned.
    */
   protected function inferStatus(): int {
+    /** @var int[] $statusCodes */
     $statusCodes = array_unique(array_map(fn(JsonApiError $error) => $error->getStatus(), $this->errors));
+
     // Same code for all errors.
     if (count($statusCodes) === 1) {
-      return $statusCodes[0];
+      return reset($statusCodes);
     }
 
     // All 4xx errors.
@@ -77,9 +79,9 @@ class JsonApiErrorResponse extends JsonResponse {
   /**
    * Create a JSON API error response from a single error.
    *
-   * @param array $error
+   * @param array<string, mixed> $error
    *   The error data.
-   * @param array $headers
+   * @param array<string, mixed> $headers
    *   An array of HTTP headers.
    * @param bool $json
    *   Whether the response body should be JSON encoded.
@@ -98,9 +100,9 @@ class JsonApiErrorResponse extends JsonResponse {
   /**
    * Create a JSON API error response from multiple errors.
    *
-   * @param array[] $errors
+   * @param array<string, mixed>[] $errors
    *   The error data.
-   * @param array $headers
+   * @param array<string, mixed> $headers
    *   An array of HTTP headers.
    * @param bool $json
    *   Whether the response body should be JSON encoded.

@@ -35,6 +35,13 @@ jobs:
           command: require
           args: symfony/http-foundation:${{ matrix.symfony-version }}
 
+      - name: Lint
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.1"
+          command: run-script
+          args: analyze
+
       - name: Test
         uses: php-actions/composer@v6
         with:
