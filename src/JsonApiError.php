@@ -23,7 +23,6 @@ class JsonApiError {
   /**
    * JsonApiError constructor.
    *
-   * @internal
    * @param int|null $status
    *   The HTTP status code applicable to this problem.
    * @param string|null $id
@@ -51,16 +50,21 @@ class JsonApiError {
    * @param mixed[]|null $meta
    *   A meta object containing non-standard meta-information about the error.
    */
-  protected function __construct(
-    protected readonly ?int $status,
-    protected readonly ?string $id,
-    protected readonly ?array $links,
-    protected readonly ?string $code,
-    protected readonly ?array $source,
-    protected readonly ?string $title,
-    protected readonly ?string $detail,
-    protected readonly ?array $meta,
-  ) { }
+  public function __construct(
+    protected readonly ?int $status = NULL,
+    protected readonly ?string $id = NULL,
+    protected readonly ?array $links = NULL,
+    protected readonly ?string $code = NULL,
+    protected readonly ?array $source = NULL,
+    protected readonly ?string $title = NULL,
+    protected readonly ?string $detail = NULL,
+    protected readonly ?array $meta = NULL,
+  ) {
+    // Check if all arguments are null.
+    if (empty(array_filter(func_get_args()))) {
+      throw new \InvalidArgumentException('Error must have at least one of the following fields: ' . implode(', ', self::ERROR_FIELDS));
+    }
+  }
 
   /**
    * Get the HTTP status code applicable to this problem.
@@ -181,20 +185,15 @@ class JsonApiError {
   public static function fromArray(array $error): JsonApiError {
     $error = array_intersect_key($error, array_flip(self::ERROR_FIELDS));
 
-    if (empty($error)) {
-      throw new \InvalidArgumentException('Error must have at least one of the following fields: ' . implode(', ', self::ERROR_FIELDS));
-
-    }
-
     return new JsonApiError(
-      $error['status'] ?? null,
-      $error['id'] ?? null,
-      $error['links'] ?? null,
-      $error['code'] ?? null,
-      $error['source'] ?? null,
-      $error['title'] ?? null,
-      $error['detail'] ?? null,
-      $error['meta'] ?? null,
+      $error['status'] ?? NULL,
+      $error['id'] ?? NULL,
+      $error['links'] ?? NULL,
+      $error['code'] ?? NULL,
+      $error['source'] ?? NULL,
+      $error['title'] ?? NULL,
+      $error['detail'] ?? NULL,
+      $error['meta'] ?? NULL,
     );
   }
 

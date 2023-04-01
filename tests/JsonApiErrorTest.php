@@ -15,15 +15,25 @@ final class JsonApiErrorTest extends TestCase {
 
   #[Test]
   public function canBeInstanciated(): void {
-    $error = JsonApiError::fromArray([
-      'status' => 400,
-    ]);
+    $this->assertInstanceOf(JsonApiError::class, new JsonApiError(
+      status: 400,
+    ));
 
-    $this->assertInstanceOf(JsonApiError::class, $error);
+    $this->assertInstanceOf(JsonApiError::class, JsonApiError::fromArray([
+      'status' => 400,
+    ]));
   }
 
   #[Test]
   public function canNotBeCreatedWithoutFields(): void {
+    $this->expectException(\InvalidArgumentException::class);
+    $this->expectExceptionMessageMatches('/Error must have at least one of the following fields: .*/');
+
+    new JsonApiError();
+  }
+
+  #[Test]
+  public function canNotBeCreatedWithoutFieldsFromArray(): void {
     $this->expectException(\InvalidArgumentException::class);
     $this->expectExceptionMessageMatches('/Error must have at least one of the following fields: .*/');
 
