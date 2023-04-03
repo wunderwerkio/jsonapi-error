@@ -18,19 +18,15 @@ class JsonApiErrorResponse extends JsonResponse {
    *   The errors to be returned.
    * @param array<string, mixed> $headers
    *   An array of HTTP headers.
-   * @param bool $json
-   *   Whether the response body should be JSON encoded.
    */
   public function __construct(
     protected readonly array $errors,
     array $headers = [],
-    bool $json = FALSE,
   ) {
     parent::__construct(
       $this->createResponseArray(), 
       $this->inferStatus(),
       $headers,
-      $json,
     );
   }
 
@@ -110,8 +106,6 @@ class JsonApiErrorResponse extends JsonResponse {
    *   A meta object containing non-standard meta-information about the error.
    * @param array<string, mixed> $headers
    *   An array of HTTP headers.
-   * @param bool $json
-   *   Whether the response body should be JSON encoded.
    */
   public static function fromError(
     ?int $status = NULL,
@@ -123,7 +117,6 @@ class JsonApiErrorResponse extends JsonResponse {
     ?string $detail = NULL,
     ?array $meta = NULL,
     array $headers = [],
-    bool $json = FALSE,
   ): JsonApiErrorResponse {
     $error = new JsonApiError(
       $status,
@@ -136,7 +129,7 @@ class JsonApiErrorResponse extends JsonResponse {
       $meta,
     );
 
-    return new self([$error], $headers, $json);
+    return new self([$error], $headers);
   }
 
   /**
@@ -146,8 +139,6 @@ class JsonApiErrorResponse extends JsonResponse {
    *   The error data.
    * @param array<string, mixed> $headers
    *   An array of HTTP headers.
-   * @param bool $json
-   *   Whether the response body should be JSON encoded.
    *
    * @return \Wunderwerk\JsonApiError\JsonApiErrorResponse
    *   The error response.
@@ -155,9 +146,8 @@ class JsonApiErrorResponse extends JsonResponse {
   public static function fromArray(
     array $error, 
     array $headers = [],
-    bool $json = FALSE,
   ): JsonApiErrorResponse {
-    return new JsonApiErrorResponse([JsonApiError::fromArray($error)], $headers, $json);
+    return new JsonApiErrorResponse([JsonApiError::fromArray($error)], $headers);
   }
 
   /**
@@ -167,8 +157,6 @@ class JsonApiErrorResponse extends JsonResponse {
    *   The error data.
    * @param array<string, mixed> $headers
    *   An array of HTTP headers.
-   * @param bool $json
-   *   Whether the response body should be JSON encoded.
    *
    * @return \Wunderwerk\JsonApiError\JsonApiErrorResponse
    *   The error response.
@@ -176,12 +164,10 @@ class JsonApiErrorResponse extends JsonResponse {
   public static function fromArrayMultiple(
     array $errors,
     array $headers = [],
-    bool $json = FALSE,
   ): JsonApiErrorResponse {
     return new JsonApiErrorResponse(
       array_map(fn(array $error) => JsonApiError::fromArray($error), $errors),
       $headers,
-      $json,
     );
   }
 
