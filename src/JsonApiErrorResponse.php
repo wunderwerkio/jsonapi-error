@@ -113,7 +113,7 @@ class JsonApiErrorResponse extends JsonResponse {
    * @param bool $json
    *   Whether the response body should be JSON encoded.
    */
-  public static function create(
+  public static function fromError(
     ?int $status = NULL,
     ?string $id = NULL,
     ?array $links = NULL,

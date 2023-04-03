@@ -58,6 +58,27 @@ final class JsonApiErrorResponseTest extends TestCase {
   }
 
   #[Test]
+  public function canBeCreatedFromError(): void {
+    $response = JsonApiErrorResponse::fromError(
+      code: 'test',
+      title: 'Test',
+      status: 400,
+    );
+
+    $this->assertEquals(json_encode([
+      'errors' => [
+        [
+          'status' => 400,
+          'code' => 'test',
+          'title' => 'Test',
+        ],
+      ],
+    ]), $response->getContent());
+
+    $this->assertInstanceOf(JsonApiErrorResponse::class, $response);
+  }
+
+  #[Test]
   public function canBeCreatedFromArray(): void {
     $response = JsonApiErrorResponse::fromArray([
       'code' => 'test',
