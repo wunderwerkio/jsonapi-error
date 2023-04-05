@@ -37,6 +37,17 @@ jobs:
       - name: Run tests
         run: composer run-script test-ci
 
+      - name: Fix code coverage paths
+        if: matrix.symfony-version == '^6'
+        run: sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' coverage.xml
+
+      - name: SonarCloud Scan
+        if: matrix.symfony-version == '^6'
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   lint:
     name: Lint with PHPStan
     runs-on: ubuntu-latest
