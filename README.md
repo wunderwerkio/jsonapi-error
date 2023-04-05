@@ -1,4 +1,6 @@
-# JSON:API Error [![Test](https://github.com/wunderwerkio/jsonapi-error/actions/workflows/main.yml/badge.svg)](https://github.com/wunderwerkio/jsonapi-error/actions/workflows/main.yml)
+# JSON:API Error 
+[![Test](https://github.com/wunderwerkio/jsonapi-error/actions/workflows/main.yml/badge.svg)](https://github.com/wunderwerkio/jsonapi-error/actions/workflows/main.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=wunderwerkio_jsonapi-error&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=wunderwerkio_jsonapi-error)
 
 This package provides `JsonApiError` and `JsonApiErrorResponse` classses to conveniently handle errors following the [JSON:API specification](https://jsonapi.org/format/#errors).
 
