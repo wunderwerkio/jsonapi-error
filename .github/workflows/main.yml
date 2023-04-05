@@ -23,24 +23,19 @@ jobs:
           path: /tmp/composer-cache
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
+      - name: Setup PHP with Xdebug
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: xdebug
+
       - name: Install dependencies
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.1"
+        run: >-
+          composer update --no-ansi --no-interaction --no-progress &&
+          composer require symfony/http-foundation:${{ matrix.symfony-version }}
 
-      - name: Install symfony/http-foundation
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.1"
-          command: require
-          args: symfony/http-foundation:${{ matrix.symfony-version }}
-
-      - name: Test
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.1"
-          command: run-script
-          args: test
+      - name: Run tests
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml tests
 
   lint:
     name: Lint with PHPStan
