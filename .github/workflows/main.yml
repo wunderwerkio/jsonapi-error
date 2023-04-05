@@ -35,7 +35,7 @@ jobs:
           composer require symfony/http-foundation:${{ matrix.symfony-version }}
 
       - name: Run tests
-        run: vendor/bin/phpunit --coverage-clover=coverage.xml tests
+        run: composer run-script test-ci
 
   lint:
     name: Lint with PHPStan
