@@ -1,11 +1,11 @@
 name: Lint & Test
 
 on:
-  - push
-  - pull_request
-  - pull_request_target
-
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   test:
@@ -13,21 +13,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        symfony-version: ['^4', '^5', '^6']
+        symfony-version: ["^4", "^5", "^6"]
     steps:
       - uses: actions/checkout@v3
-
-      - name: Cache Composer dependencies
-        uses: actions/cache@v3
         with:
-          path: /tmp/composer-cache
-          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          fetch-depth: 0
 
       - name: Setup PHP with Xdebug
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: "8.1"
           coverage: xdebug
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
         run: >-
