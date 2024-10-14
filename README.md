@@ -168,22 +168,27 @@ function someRequestHandler(Request $request): Response {
 
 ## Local Development
 
-A local dev environment without the need to have PHP locally installed can be done via [DDEV](https://ddev.readthedocs.io).
+A local dev environment can be created using `nix`:
 
 ```bash
-ddev start
+# For PHP 8.1
+nix develop '#.php81'
+# For PHP 8.2
+nix develop '#.php82'
+# For PHP 8.3
+nix develop '#.php83'
 ```
 
 **Run tests**
 
 ```bash
-ddev composer test
+composer test
 ```
 
 **Lint with PHPStan**
 
 ```bash
-ddev composer analyze
+composer analyze
 ```
 
 ## Credits
