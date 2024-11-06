@@ -23,6 +23,8 @@ class JsonApiErrorResponse extends JsonResponse {
     protected readonly array $errors,
     array $headers = [],
   ) {
+    $headers['Content-Type'] = 'application/vnd.api+json';
+
     parent::__construct(
       $this->createResponseArray(), 
       $this->inferStatus(),
@@ -38,6 +40,16 @@ class JsonApiErrorResponse extends JsonResponse {
    */
   protected function createResponseArray(): array {
     return [
+      'jsonapi' => [
+        'version' => '1.0',
+        'meta' => [
+          'links' => [
+            'self' => [
+              'href' => 'http://jsonapi.org/format/1.0/',
+            ],
+          ],
+        ],
+      ],
       'errors' => array_map(fn(JsonApiError $error) => $error->toArray(), $this->errors),
     ];
   }
