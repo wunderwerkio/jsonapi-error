@@ -159,7 +159,7 @@ class JsonApiError {
       [
         'id' => $this->id,
         'links' => $this->links,
-        'status' => $this->status,
+        'status' => (string) $this->status,
         'code' => $this->code,
         'source' => $this->source,
         'title' => $this->title,
