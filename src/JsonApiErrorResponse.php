@@ -26,7 +26,7 @@ class JsonApiErrorResponse extends JsonResponse {
     $headers['Content-Type'] = 'application/vnd.api+json';
 
     parent::__construct(
-      $this->createResponseArray(), 
+      $this->createResponseArray(),
       $this->inferStatus(),
       $headers,
     );
@@ -156,7 +156,7 @@ class JsonApiErrorResponse extends JsonResponse {
    *   The error response.
    */
   public static function fromArray(
-    array $error, 
+    array $error,
     array $headers = [],
   ): JsonApiErrorResponse {
     return new JsonApiErrorResponse([JsonApiError::fromArray($error)], $headers);

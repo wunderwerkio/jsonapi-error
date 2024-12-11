@@ -87,8 +87,10 @@ class JsonApiError {
   }
 
   /**
-   * Get a links object containing the following members:
-   * - about: a link that leads to further details about this particular
+   * Get all links.
+   *
+   * Contains the following members:
+   * - about: a link that leads to further details about this problem
    *   occurrence of the problem.
    *
    * @return string[]|null
@@ -129,7 +131,7 @@ class JsonApiError {
   }
 
   /**
-   * Get a human-readable explanation specific to this occurrence of the problem.
+   * Get a human-readable explanation specific to this problem.
    *
    * @return string|null
    *   The error detail.

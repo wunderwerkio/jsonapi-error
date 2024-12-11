@@ -13,6 +13,9 @@ use Wunderwerk\JsonApiError\JsonApiError;
 #[CoversClass(JsonApiError::class)]
 final class JsonApiErrorTest extends TestCase {
 
+  /**
+   * Test that the error can be instantiated.
+   */
   #[Test]
   public function canBeInstanciated(): void {
     $this->assertInstanceOf(JsonApiError::class, new JsonApiError(
@@ -24,6 +27,9 @@ final class JsonApiErrorTest extends TestCase {
     ]));
   }
 
+  /**
+   * Test that the error can not be created without fields.
+   */
   #[Test]
   public function canNotBeCreatedWithoutFields(): void {
     $this->expectException(\InvalidArgumentException::class);
@@ -32,6 +38,9 @@ final class JsonApiErrorTest extends TestCase {
     new JsonApiError();
   }
 
+  /**
+   * Test that the error can not be created without fields from an array.
+   */
   #[Test]
   public function canNotBeCreatedWithoutFieldsFromArray(): void {
     $this->expectException(\InvalidArgumentException::class);
@@ -40,6 +49,9 @@ final class JsonApiErrorTest extends TestCase {
     JsonApiError::fromArray([]);
   }
 
+  /**
+   * Test that the error can be created with status.
+   */
   #[Test]
   public function canBeCreatedWithStatus(): void {
     $error = JsonApiError::fromArray([
@@ -49,6 +61,9 @@ final class JsonApiErrorTest extends TestCase {
     $this->assertEquals(400, $error->getStatus());
   }
 
+  /**
+   * Test that the error can be created with id.
+   */
   #[Test]
   public function canBeCreatedWithId(): void {
     $error = JsonApiError::fromArray([
@@ -58,6 +73,9 @@ final class JsonApiErrorTest extends TestCase {
     $this->assertEquals('1', $error->getId());
   }
 
+  /**
+   * Test that the error can be created with links.
+   */
   #[Test]
   public function canBeCreatedWithLinks(): void {
     $error = JsonApiError::fromArray([
@@ -67,6 +85,9 @@ final class JsonApiErrorTest extends TestCase {
     $this->assertEquals(['about' => 'http://example.com'], $error->getLinks());
   }
 
+  /**
+   * Test that the error can be created with code.
+   */
   #[Test]
   public function canBeCreatedWithCode(): void {
     $error = JsonApiError::fromArray([
@@ -76,6 +97,9 @@ final class JsonApiErrorTest extends TestCase {
     $this->assertEquals('400', $error->getCode());
   }
 
+  /**
+   * Test that the error can be created with source.
+   */
   #[Test]
   public function canBeCreatedWithSource(): void {
     $error = JsonApiError::fromArray([
@@ -85,6 +109,9 @@ final class JsonApiErrorTest extends TestCase {
     $this->assertEquals(['pointer' => '/data/attributes/first-name'], $error->getSource());
   }
 
+  /**
+   * Test that the error can be created with title.
+   */
   #[Test]
   public function canBeCreatedWithTitle(): void {
     $error = JsonApiError::fromArray([
@@ -94,6 +121,9 @@ final class JsonApiErrorTest extends TestCase {
     $this->assertEquals('Some title', $error->getTitle());
   }
 
+  /**
+   * Test that the error can be created with detail.
+   */
   #[Test]
   public function canBeCreatedWithDetail(): void {
     $error = JsonApiError::fromArray([
@@ -103,6 +133,9 @@ final class JsonApiErrorTest extends TestCase {
     $this->assertEquals('Some detail', $error->getDetail());
   }
 
+  /**
+   * Test that the error can be created with meta.
+   */
   #[Test]
   public function canBeCreatedWithMeta(): void {
     $error = JsonApiError::fromArray([
@@ -112,6 +145,9 @@ final class JsonApiErrorTest extends TestCase {
     $this->assertEquals(['foo' => 'bar'], $error->getMeta());
   }
 
+  /**
+   * Test that the error can be created with all fields.
+   */
   #[Test]
   public function canBeCreatedWithAllFields(): void {
     $error = JsonApiError::fromArray([
@@ -135,6 +171,9 @@ final class JsonApiErrorTest extends TestCase {
     $this->assertEquals(['foo' => 'bar'], $error->getMeta());
   }
 
+  /**
+   * Test that the error can be created from an array.
+   */
   #[Test]
   public function canBeCreatedFromArray(): void {
     $error = JsonApiError::fromArray([
