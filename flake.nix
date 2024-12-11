@@ -1,18 +1,17 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    utils.url = "github:wunderwerkio/nix-utils";
   };
 
   outputs = {
     self,
     nixpkgs,
-    flake-utils,
-  }: flake-utils.lib.eachDefaultSystem (system:
+    utils,
+  }: utils.lib.systems.eachDefault (system:
     let
-      overlays = [];
       pkgs = import nixpkgs {
-        inherit system overlays;
+        inherit system;
       };
       prepareEnv = ''
         echo ""
@@ -54,7 +53,17 @@
           shellHook = prepareEnv;
         };
 
-        default = php82;
+        # PHP 8.4
+        php84 = pkgs.mkShell {
+          buildInputs = [
+            pkgs.php84
+            pkgs.php84Packages.composer
+          ];
+
+          shellHook = prepareEnv;
+        };
+
+        default = php83;
       };
 
       formatter = pkgs.alejandra;

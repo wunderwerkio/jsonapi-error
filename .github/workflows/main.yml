@@ -32,6 +32,10 @@ jobs:
             shell: "php82"
           - symfony: "^7"
             shell: "php83"
+          - symfony: "^6"
+            shell: "php84"
+          - symfony: "^7"
+            shell: "php84"
     defaults:
       run:
         shell: nix develop .#${{ matrix.reqs.shell }} --command bash {0}
