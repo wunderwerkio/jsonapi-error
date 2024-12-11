@@ -53,8 +53,11 @@ jobs:
           composer update --no-ansi --no-interaction --no-progress &&
           composer require symfony/http-foundation:${{ matrix.reqs.symfony }}
 
+      - name: PHPCS
+        run: ./vendor/bin/phpcs -s .
+
       - name: PHPStan
         run: ./vendor/bin/phpstan analyse --level 8 src tests
 
       - name: PHPUnit
-        run: ./vendor/bin/phpunit --testdox tests
+        run: ./vendor/bin/phpunit tests
